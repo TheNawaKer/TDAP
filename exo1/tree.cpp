@@ -49,18 +49,18 @@ TREE buildTREE(int N)
 	}
 }
 
-void visit(TREE h)
+void visit(TREE h,string s)
 {
-	cout<<"Item: "<<h->item<<endl;
+	cout<<s<<h->item<<endl;
 }
 
-void traverser(TREE h)
+void traverser(TREE h,string s="")
 {
 	if(h!=NULL)
 	{
-		visit(h);
-		traverser(h->left);
-		traverser(h->right);
+		traverser(h->left,s+"    ");
+		visit(h,s);
+		traverser(h->right,s+"    ");
 	}
 }
 
@@ -71,13 +71,36 @@ int count(TREE h)
 	return count(h->left) + count(h->right) + 1;
 }
 
+int countLeaves(TREE h)
+{
+	if(h!=NULL && h->left==NULL && h->right==NULL)
+	{
+		return countLeaves(h->left) + countLeaves(h->right) + 1;
+	}
+	else if(h!=NULL)
+	{
+		return countLeaves(h->left) + countLeaves(h->right);
+	}
+}
+
+int height(TREE h)
+{
+	if (h == 0) return -1;
+	int u = height(h->left), v = height(h->right);
+	if (u > v) return u+1; else return v+1;
+}
+
 
 int main()
 {
 	TREE arbre = createTREE();
-	arbre=buildTREE(15);
+	arbre=buildTREE(16);
 	cout<<"comptage: "<<count(arbre)<<endl;
+	cout<<"leaves: "<<countLeaves(arbre)<<endl;
+	cout<<"height: "<<height(arbre)<<endl;
 	cout<<"affichage: "<<endl;
 	traverser(arbre);
 	return 0;
 }
+
+
