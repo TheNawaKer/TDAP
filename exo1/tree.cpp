@@ -75,7 +75,7 @@ int countLeaves(TREE h)
 {
 	if(h!=NULL && h->left==NULL && h->right==NULL)
 	{
-		return countLeaves(h->left) + countLeaves(h->right) + 1;
+		return 1;
 	}
 	else if(h!=NULL)
 	{
@@ -91,10 +91,23 @@ int height(TREE h)
 }
 
 
+int pathLenght(TREE h,int level=-1)
+{
+	if(h==NULL)
+	{
+		return 0;
+	}
+	else
+	{
+		return pathLenght(h->left,level+1) + pathLenght(h->right,level+1) + level+1;
+	}
+}
+
+
 int main()
 {
 	TREE arbre = createTREE();
-	arbre=buildTREE(16);
+	arbre=buildTREE(0);
 	cout<<"comptage: "<<count(arbre)<<endl;
 	cout<<"leaves: "<<countLeaves(arbre)<<endl;
 	cout<<"height: "<<height(arbre)<<endl;
